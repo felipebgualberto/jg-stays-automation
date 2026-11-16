@@ -1,0 +1,76 @@
+{
+  "_note": "Fictitious data. Same shape as the real monthly input; names, IDs, amounts and addresses are invented.",
+  "period": {"year": 2026, "month": 10, "label": "outubro/2026", "month_name": "outubro", "issued": "01/11/2026", "days": 31},
+  "issuer": {"brand_a": "JG", "brand_b": "stays", "legal_name": "Example Property Management Ltda.", "tax_id": "CNPJ 00.000.000/0001-00"},
+  "pms_fee_rate": 0.019,
+  "owners": {
+    "owner-01": {"name": "Proprietário Exemplo", "units": ["Unit A", "Unit B"]}
+  },
+  "units": [
+    {
+      "code": "Unit A",
+      "description": "Apto 1 quarto com varanda",
+      "location": "Bairro 1, Vitória-ES",
+      "owner": "owner-01",
+      "commission_rate": 0.20,
+      "bookings": [
+        {"stay": "03/10–07/10", "check_in": "2026-10-03", "check_out": "2026-10-07", "nights": 4, "channel": "Booking", "ref": "BK-1001", "guest_paid": 1840.00,
+         "platform_deductions": [["Comissão", 239.20], ["Pagamento", 27.60]], "cleaning_fee": 200},
+        {"stay": "08/10–10/10", "check_in": "2026-10-08", "check_out": "2026-10-10", "nights": 2, "channel": "Airbnb", "ref": "AB-2001", "guest_paid": 790.00,
+         "platform_deductions": [["Serv. hóspede", 110.60], ["Serv. anfitrião", 23.70]], "cleaning_fee": 200},
+        {"stay": "11/10–16/10", "check_in": "2026-10-11", "check_out": "2026-10-16", "nights": 5, "channel": "Airbnb", "ref": "AB-2002", "guest_paid": 1975.00,
+         "platform_deductions": [["Serv. hóspede", 276.50], ["Serv. anfitrião", 59.25]], "cleaning_fee": 200},
+        {"stay": "17/10–19/10", "check_in": "2026-10-17", "check_out": "2026-10-19", "nights": 2, "channel": "Booking", "ref": "BK-1002", "guest_paid": 980.00,
+         "platform_deductions": [["Comissão", 127.40], ["Pagamento", 14.70]], "cleaning_fee": 200},
+        {"stay": "22/10–26/10", "check_in": "2026-10-22", "check_out": "2026-10-26", "nights": 4, "channel": "Airbnb", "ref": "AB-2003", "guest_paid": 1580.00,
+         "platform_deductions": [["Taxa total", 268.60]], "cleaning_fee": 200, "estimated": true},
+        {"stay": "29/10–01/11", "check_in": "2026-10-29", "check_out": "2026-11-01", "nights": 3, "channel": "Booking", "ref": "BK-1003", "guest_paid": 1260.00,
+         "platform_deductions": [["Comissão", 163.80], ["Pagamento", 18.90]], "cleaning_fee": 200}
+      ]
+    },
+    {
+      "code": "Unit B",
+      "description": "Apto vendido como \"2 Quartos\" e \"Studio\"",
+      "location": "Bairro 2, Vitória-ES",
+      "owner": "owner-01",
+      "commission_rate": 0.20,
+      "bookings": [
+        {"stay": "02/10–09/10 · Studio", "check_in": "2026-10-02", "check_out": "2026-10-09", "nights": 7, "channel": "Airbnb", "ref": "AB-2101", "guest_paid": 1890.00,
+         "platform_deductions": [["Serv. hóspede", 264.60], ["Serv. anfitrião", 56.70]], "cleaning_fee": 200},
+        {"stay": "10/10–12/10 · 2Q", "check_in": "2026-10-10", "check_out": "2026-10-12", "nights": 2, "channel": "Booking", "ref": "BK-1101", "guest_paid": 1150.00,
+         "platform_deductions": [["Comissão", 149.50], ["Pagamento", 17.25]], "cleaning_fee": 250},
+        {"stay": "15/10–25/10 · Studio", "check_in": "2026-10-15", "check_out": "2026-10-25", "nights": 10, "channel": "Booking", "ref": "BK-1102", "guest_paid": 2850.00,
+         "platform_deductions": [["Comissão", 370.50], ["Pagamento", 42.75]], "cleaning_fee": 200},
+        {"stay": "27/10–30/10 · 2Q", "check_in": "2026-10-27", "check_out": "2026-10-30", "nights": 3, "channel": "Airbnb", "ref": "AB-2102", "guest_paid": 1620.00,
+         "platform_deductions": [["Taxa total", 275.40]], "cleaning_fee": 250, "estimated": true}
+      ]
+    },
+    {
+      "code": "Unit C",
+      "description": "Imóvel próprio da empresa",
+      "location": "Bairro 2, Vitória-ES",
+      "owner": null,
+      "commission_rate": 0.0,
+      "bookings": [
+        {"stay": "01/10–06/10", "check_in": "2026-10-01", "check_out": "2026-10-06", "nights": 5, "channel": "Airbnb", "ref": "AB-2201", "guest_paid": 1450.00,
+         "platform_deductions": [["Serv. hóspede", 203.00], ["Serv. anfitrião", 43.50]], "cleaning_fee": 200},
+        {"stay": "06/10–13/10", "check_in": "2026-10-06", "check_out": "2026-10-13", "nights": 7, "channel": "Booking", "ref": "BK-1201", "guest_paid": 1960.00,
+         "platform_deductions": [["Comissão", 254.80], ["Pagamento", 29.40]], "cleaning_fee": 200},
+        {"stay": "14/10–24/10", "check_in": "2026-10-14", "check_out": "2026-10-24", "nights": 10, "channel": "Airbnb", "ref": "AB-2202", "guest_paid": 2600.00,
+         "platform_deductions": [["Serv. hóspede", 364.00], ["Serv. anfitrião", 78.00]], "cleaning_fee": 200},
+        {"stay": "25/10–31/10", "check_in": "2026-10-25", "check_out": "2026-10-31", "nights": 6, "channel": "Airbnb", "ref": "AB-2203", "guest_paid": 1680.00,
+         "platform_deductions": [["Taxa total", 285.60]], "cleaning_fee": 200, "estimated": true}
+      ]
+    }
+  ],
+  "history": {
+    "_note": "Jan–Sep, fictitious. October is computed from the bookings above.",
+    "months": ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set"],
+    "nights":        {"Unit A": [24, 20, 19, 18, 17, 12, 22, 21, 20], "Unit B": [0, 0, 0, 0, 0, 0, 0, 2, 12], "Unit C": [10, 6, 0, 0, 0, 14, 22, 26, 25]},
+    "guest_paid":    {"Unit A": [8200, 7300, 6600, 6400, 6900, 5100, 7600, 7300, 8100], "Unit B": [0, 0, 0, 0, 0, 0, 0, 640, 3900], "Unit C": [3000, 1800, 0, 0, 0, 3800, 6500, 7100, 7300]},
+    "payout":        {"Unit A": [4400, 3900, 3500, 3400, 3700, 2700, 4100, 3900, 4400], "Unit B": [0, 0, 0, 0, 0, 0, 0, 260, 2050]},
+    "company_revenue": {"Unit A": [2300, 2150, 1950, 1850, 2050, 1500, 2250, 2150, 2300], "Unit B": [0, 0, 0, 0, 0, 0, 0, 330, 1250], "Unit C": [2400, 1450, 0, 0, 0, 3050, 5300, 5800, 5950]},
+    "projection_base_months": ["set", "out"]
+  },
+  "next_bookings": "Unit A: 19/11–22/11 (Booking) · Unit B 2Q: 20/11–23/11 (Airbnb)."
+}

@@ -1,0 +1,30 @@
+{
+  "_note": "Shape of what the agent reads from the PriceLabs MCP + Optimizer screens, reduced and anonymized. Grades are the real ones from the 16 Nov 2026 run; IDs, titles and URLs are placeholders.",
+  "listing": {"name": "Unit B · 2BR", "channel": "Airbnb", "listing_id": "AIRBNB-UNIT-B-2BR", "max_guests": 8, "days_listed": 80},
+  "run_date": "2026-11-16",
+  "overall_score": 9.2,
+  "previous_score": 8.9,
+  "grades": {
+    "title": {"grade": "A", "previous": "B", "reason": "Clear, local-language title with the main differentiators."},
+    "description": {"grade": "A", "reason": "Complete; optional refinement: state Wi-Fi speed in Mbps."},
+    "photos": {"grade": "B", "reason": "Cover dominated by the set dining table; bathroom shown as a sink close-up among the first photos; uneven light on the work desk; iron and hair dryer on top of the sink; repeated angles."},
+    "amenities": {"grade": "A", "reason": "Suggests 'keypad' and 'building staff'."},
+    "number_of_reviews": {"grade": "B", "reason": "4 reviews in 80 days. Consider a temporarily lower price on short windows to collect reviews."},
+    "rating": {"grade": "A", "value": 5.0},
+    "review_summary": {"grade": "A", "reason": "Reply to the reviews received."},
+    "guest_favorite": {"grade": "B", "reason": "Not yet a Guest Favorite."},
+    "consistency": {"grade": "A"}
+  },
+  "segments": ["families with small children", "large groups", "business travel"],
+  "competitors": [
+    {"name": "Comp 1 — spacious penthouse", "overall": 6.4, "title": "C", "photos": "D", "description": "C", "has_pool": true},
+    {"name": "Comp 2 — apart-hotel with sea view", "overall": 7.2, "title": "B", "photos": "C", "description": "C", "has_pool": true},
+    {"name": "Comp 3 — 2-suite apartment", "overall": 7.1, "title": "B", "photos": "C", "description": "C", "has_pool": false}
+  ],
+  "ranking_sample": [
+    {"date": "2026-11-25", "guests": 6, "min_stay": 2, "position": 1},
+    {"date": "2026-12-04", "guests": 8, "min_stay": 2, "position": 1},
+    {"date": "2026-12-10", "guests": 6, "min_stay": 3, "position": 2}
+  ],
+  "neighborhood": {"radius_m": 760, "comparable_2br_6plus": 0}
+}

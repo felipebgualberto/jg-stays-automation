@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+*.local.json
+# real monthly data never goes in the repo
+owner-reporting/examples/input/*.real.json

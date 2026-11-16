@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Revenue Simulator — JG Stays (demo)</title>
+<style>
+/* Two-column tool: inputs on the left, an owner-ready proposal on the right.
+   Demo build: market data is illustrative (same structure as the PriceLabs pull, values altered). */
+:root{
+  --navy:#06225C; --green:#0E8A5F; --ink:#16213A; --muted:#5A6372;
+  --bg:#F3F5F9; --card:#FFFFFF; --line:#DCE2EC; --soft:#E8F4EE; --warn:#B4520F;
+  --display:system-ui,-apple-system,"Segoe UI",sans-serif; --body:system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --navy:#9DB7F2; --green:#3CC98F; --ink:#E6EAF2; --muted:#9AA5B8;
+  --bg:#0D1424; --card:#151E33; --line:#26314A; --soft:#13302A; --warn:#F0A25E; color-scheme:dark;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body)}
+header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:20px clamp(16px,4vw,40px) 6px}
+.logo{font:700 22px var(--display);color:var(--navy);letter-spacing:-.5px}
+.logo b{color:var(--green)}
+header p{margin:0;color:var(--muted)}
+.demo{margin:0 clamp(16px,4vw,40px);padding:8px 12px;border:1px dashed var(--warn);border-radius:8px;color:var(--warn);font-size:13.5px;max-width:1160px}
+main{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:20px;padding:14px clamp(16px,4vw,40px) 40px;max-width:1240px}
+@media (max-width:860px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font:600 15px var(--display);color:var(--navy);margin:0 0 12px}
+form{display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+select,input[type=text],input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+input[type=range]{width:100%;accent-color:var(--green)}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{font:inherit;font-size:14px;padding:8px 4px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--card);border-color:var(--navy)}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+.right{display:grid;gap:16px;align-content:start}
+.hero{display:grid;gap:6px;border-left:5px solid var(--green)}
+.hero .to{color:var(--muted);font-size:14px}
+.hero .big{font:700 clamp(28px,4.5vw,42px)/1.1 var(--display);color:var(--navy)}
+.hero .big span{color:var(--green)}
+.hero .sub{color:var(--muted)}
+.scen{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:560px){.scen{grid-template-columns:1fr}}
+.sc{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--card)}
+.sc.on{border-color:var(--green);background:var(--soft)}
+.sc .n{font-size:13px;color:var(--muted)}
+.sc .v{font:600 20px var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.sc .d{font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14.5px}
+td{padding:6px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;white-space:nowrap}
+tr.tot td{font-weight:600;color:var(--green);border-bottom:none;font-size:16px}
+tr.neg td:last-child{color:var(--muted)}
+.cmp{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:13px;font-weight:600;background:var(--soft);color:var(--green)}
+.pill.w{background:transparent;border:1px solid var(--warn);color:var(--warn)}
+.chart{overflow-x:auto}
+svg text{fill:var(--muted);font:11px var(--body)}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:640px){.proof{grid-template-columns:1fr}}
+.proof div{background:var(--bg);border-radius:10px;padding:12px}
+.proof b{font:600 22px var(--display);color:var(--green)}
+.proof small{display:block;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:600 14px var(--body);padding:10px 16px;border-radius:8px;border:0;background:var(--green);color:#fff;cursor:pointer}
+.note{font-size:12.5px;color:var(--muted);line-height:1.45}
+.note p{margin:0 0 6px;max-width:80ch}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">JG<b>stays</b></div>
+  <p>Owner revenue simulator · market data by neighborhood and unit type</p>
+</header>
+<p class="demo">Demo build: market numbers are illustrative (same structure as the PriceLabs pull, values altered). The production version is in Portuguese and sends the summary over WhatsApp.</p>
+<main>
+  <section class="card" aria-labelledby="t-in">
+    <h2 id="t-in">Property</h2>
+    <form id="f" onsubmit="return false">
+      <label for="dono">Owner name (shown on the proposal)
+        <input id="dono" type="text" placeholder="e.g. Mr. Silva" value="">
+      </label>
+      <label for="reg">Area
+        <select id="reg">
+          <option value="sh">Neighborhood 1 (beachfront, business district)</option>
+          <option value="bv" selected>Neighborhood 2 (beachfront, residential)</option>
+        </select>
+      </label>
+      <div>
+        <label id="lq">Unit type</label>
+        <div class="seg" role="group" aria-labelledby="lq" id="tip">
+          <button type="button" data-v="1" aria-pressed="false">Studio/1BR</button>
+          <button type="button" data-v="2" aria-pressed="true">2BR</button>
+          <button type="button" data-v="3" aria-pressed="false">3BR</button>
+        </div>
+      </div>
+      <label for="pad">Quality vs. the area: <b id="padv">0%</b>
+        <input id="pad" type="range" min="-20" max="30" step="5" value="0">
+      </label>
+      <p class="hint">Up for sea view, design, parking, new building; down for basic finish, no parking, far from the beach.</p>
+      <label for="limp">Cleaning fee charged to guests (R$)
+        <input id="limp" type="number" min="0" step="5" value="250">
+      </label>
+      <label for="los">Average stay (nights)
+        <input id="los" type="number" min="1" max="15" step="0.5" value="3">
+      </label>
+      <label for="fix">Owner's fixed costs per month (R$)
+        <input id="fix" type="number" min="0" step="50" value="1200">
+      </label>
+      <p class="hint">HOA + power + internet + property tax/12. Example value.</p>
+      <label for="alug">Long-term rent the owner would get (R$/month)
+        <input id="alug" type="number" min="0" step="100" value="3000">
+      </label>
+    </form>
+  </section>
+
+  <div class="right">
+    <section class="card hero" aria-live="polite">
+      <div class="to" id="to">Simulation for your apartment</div>
+      <div class="big" id="big">—</div>
+      <div class="sub" id="sub">—</div>
+    </section>
+
+    <section class="scen" id="scen" aria-label="Scenarios"></section>
+
+    <section class="card">
+      <h2 id="t-br">How we get there (monthly average, moderate scenario)</h2>
+      <table aria-labelledby="t-br"><tbody id="br"></tbody></table>
+      <div class="cmp" style="margin-top:12px" id="cmp"></div>
+    </section>
+
+    <section class="card">
+      <h2>Payout month by month (moderate scenario)</h2>
+      <div class="chart" id="chart"></div>
+      <p class="hint">Dec–Feb carry the year: New Year's and Carnival nights price far above the surrounding dates.</p>
+    </section>
+
+    <section class="card">
+      <h2>What we already deliver (managed units, last 90 days)</h2>
+      <div class="proof">
+        <div><b>78%</b> occupancy · Unit A<small>Market: 59%</small></div>
+        <div><b>93%</b> occupancy · Unit C<small>Market: 60%</small></div>
+        <div><b>4.9+</b> Airbnb rating<small>across managed units</small></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="actions">
+        <button class="btn" id="copy" type="button">Copy summary for WhatsApp</button>
+        <span class="hint" id="copied" role="status"></span>
+      </div>
+    </section>
+
+    <section class="note">
+      <p><b>Where the numbers come from.</b> Prices: nightly rate asked by listings of the same type nearby (PriceLabs market data), discounted 10% to reach the rate actually sold — the gap we see in our own units. Occupancy: real market occupancy month by month over the last 12 months. Seasonality: median price of each of the next 12 months.</p>
+      <p><b>Scenarios.</b> Conservative: 1st-quartile rate, occupancy 10 points below market. Moderate: median rate, market occupancy. Managed by JG Stays: median rate, occupancy 8 points above market — below what our units delivered in the last 90 days.</p>
+      <p><b>Deductions.</b> Platform fees 18% of what the guest pays (average of our Airbnb + Booking bookings), PMS 1.9%, cleaning passed to the cleaning team, 20% management commission. An estimate, not a revenue guarantee.</p>
+    </section>
+  </div>
+</main>
+<script>
+// Illustrative market data. Shape: per area -> n listings, monthly price index (Nov..Oct),
+// monthly market occupancy %, and per unit type [p25 rate, median rate, p75 rate, sample size].
+const D={"sh":{"n":281,"pidx":[0.98,1.10,1.19,1.12,0.98,0.96,0.94,0.93,0.93,0.96,0.93,0.97],"occ":[67,60,76,61,60,59,57,56,60,60,59,61],"t":{"1":[270,325,370,230],"2":[330,400,510,50],"3":[355,565,690,25]}},
+         "bv":{"n":296,"pidx":[1.02,1.18,1.24,1.15,0.97,0.96,0.89,0.89,0.91,0.90,0.92,0.94],"occ":[71,65,78,64,62,62,61,57,64,64,63,63],"t":{"1":[270,318,390,190],"2":[292,380,525,80],"3":[355,565,690,25]}}};
+const MES=["Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"];
+const DIAS=[30,31,31,28,31,30,31,30,31,31,30,31];
+const REAL=0.90, PLAT=0.18, STAYS=0.019, COM=0.20;
+const LIMP_DEF={"1":200,"2":250,"3":300};
+let tip="2", limpTouched=false;
+const $=id=>document.getElementById(id);
+const brl=v=>"R$ "+Math.round(v).toLocaleString("pt-BR");
+const k=v=>(v/1000).toLocaleString("en-US",{maximumFractionDigits:1})+"k";
+
+function sim(sc){
+  const r=D[$("reg").value], t=r.t[tip], pad=1+(+$("pad").value)/100;
+  const limp=+$("limp").value||0, los=Math.max(1,+$("los").value||3);
+  const base=(sc==="cons"?t[0]:t[1])*REAL*pad, dOcc=sc==="cons"?-10:sc==="jg"?8:0;
+  const m=MES.map((_,i)=>{
+    const occ=Math.min(90,Math.max(15,r.occ[i]+dOcc))/100, adr=base*r.pidx[i];
+    const noites=occ*DIAS[i], diarias=noites*adr, est=noites/los, lim=est*limp;
+    const pago=diarias+lim, plat=pago*PLAT, stays=pago*STAYS;
+    const baseCom=pago-plat-stays-lim, com=baseCom*COM, rep=baseCom-com;
+    return {noites,adr,diarias,lim,pago,plat,stays,com,rep};
+  });
+  const avg=key=>m.reduce((s,x)=>s+x[key],0)/12;
+  return {m,avg,ano:m.reduce((s,x)=>s+x.rep,0)};
+}
+
+function render(){
+  $("padv").textContent=(+$("pad").value>0?"+":"")+$("pad").value+"%";
+  const nome=$("dono").value.trim(), fix=+$("fix").value||0, alug=+$("alug").value||0;
+  const S={cons:sim("cons"),prov:sim("prov"),jg:sim("jg")}, p=S.prov;
+  const repM=p.avg("rep"), tipTxt={"1":"studio/1BR","2":"2BR","3":"3BR"}[tip];
+  const regTxt=$("reg").selectedOptions[0].text.split(" (")[0];
+  $("to").textContent=nome?`Simulation for ${nome}`:"Simulation for your apartment";
+  $("big").innerHTML=`Your apartment would make <span>${brl(repM)}/month</span> with JG Stays`;
+  $("sub").textContent=`Average net payout for a ${tipTxt} in ${regTxt}, after platforms, cleaning and our commission. ${brl(p.ano)} over 12 months.`;
+  const lab={cons:["Conservative","1st-quartile rate, occupancy −10 pts"],prov:["Moderate","area median"],jg:["Managed by JG Stays","occupancy +8 pts"]};
+  $("scen").innerHTML=Object.keys(S).map(s=>`<div class="sc${s==="prov"?" on":""}"><div class="n">${lab[s][0]}</div><div class="v">${brl(S[s].avg("rep"))}/mo</div><div class="d">${lab[s][1]} · ${Math.round(S[s].avg("noites"))} nights/mo</div></div>`).join("");
+  const rows=[
+    ["Nights sold per month",Math.round(p.avg("noites"))+" nights",0],
+    ["Average nightly rate sold",brl(p.avg("diarias")/p.avg("noites")),0],
+    ["Guests pay (nights + cleaning)",brl(p.avg("pago")),0],
+    ["− Platform fees (18%)","− "+brl(p.avg("plat")),1],
+    ["− PMS (1.9%)","− "+brl(p.avg("stays")),1],
+    ["− Cleaning (to the cleaning team)","− "+brl(p.avg("lim")),1],
+    ["− JG Stays commission (20%)","− "+brl(p.avg("com")),1],
+    ["Owner payout",brl(repM),2]];
+  $("br").innerHTML=rows.map(r=>`<tr class="${r[2]==1?"neg":r[2]==2?"tot":""}"><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("");
+  const res=repM-fix;
+  let html=`<span>After fixed costs (${brl(fix)}): <b>${brl(res)}/month</b></span>`;
+  if(alug>0){const d=res-alug, pc=Math.round(d/alug*100);
+    html+=d>=0?`<span class="pill">${brl(d)}/month above long-term rent (+${pc}%)</span>`:`<span class="pill w">${brl(-d)}/month below long-term rent</span>`;}
+  $("cmp").innerHTML=html;
+  const W=640,H=200,pl=44,pb=24,pt=14, mx=Math.max(...p.m.map(x=>x.rep))*1.12, bw=(W-pl-10)/12;
+  const y=v=>H-pb-(v/mx)*(H-pb-pt);
+  const step=mx>12000?4000:mx>6000?2000:1000; let g="";
+  for(let v=0;v<=mx;v+=step)g+=`<line x1="${pl}" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${v?k(v):"0"}</text>`;
+  const top=Math.max(...p.m.map(z=>z.rep));
+  g+=p.m.map((x,i)=>{const X=pl+i*bw+bw*.18, yy=y(x.rep), hi=x.rep===top;
+    return `<rect x="${X}" y="${yy}" width="${bw*.64}" height="${H-pb-yy}" rx="3" fill="${hi?"var(--green)":"var(--navy)"}" opacity="${hi?1:.8}"><title>${MES[i]}: ${brl(x.rep)}</title></rect><text x="${X+bw*.32}" y="${H-8}" text-anchor="middle">${MES[i]}</text>`}).join("");
+  $("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:420px" role="img" aria-label="Estimated monthly payout">${g}</svg>`;
+  window._txt=`*JG Stays simulation${nome?" — "+nome:""}*\n${tipTxt}, ${regTxt}\n\nEstimated net payout: *${brl(repM)}/month* (${brl(p.ano)} over 12 months)\nConservative: ${brl(S.cons.avg("rep"))}/mo · Managed by JG Stays: ${brl(S.jg.avg("rep"))}/mo\n\nAfter platform fees, cleaning and our 20% commission.${alug>0?`\nLong-term rent reference: ${brl(alug)}/month.`:""}\n\nBased on market data for the area. An estimate, not a guarantee.`;
+}
+$("tip").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;tip=b.dataset.v;
+  [...$("tip").children].forEach(x=>x.setAttribute("aria-pressed",x===b));
+  if(!limpTouched)$("limp").value=LIMP_DEF[tip]; render();});
+$("limp").addEventListener("input",()=>limpTouched=true);
+document.querySelectorAll("#f input,#f select").forEach(el=>el.addEventListener("input",render));
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(window._txt);$("copied").textContent="Copied. Paste it into the owner's WhatsApp."}catch(e){$("copied").textContent="Your browser blocked copying."}});
+render();
+</script>
+</body>
+</html>

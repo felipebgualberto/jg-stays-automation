@@ -45,20 +45,6 @@ scheduled tasks to close the loop.
 |---|---|
 | ![Owner statement, page 1](docs/img/owner-statement.png) | ![Revenue simulator](docs/img/simulator.png) |
 
-## Impact
-
-`TBD` values are being filled in from the operator's own estimates. Formula:
-**hours saved per month = (time before − time now) × runs per month.**
-
-| Workflow | Before | Now | Runs / month | Saved / month |
-|---|---|---|---|---|
-| Owner statement | `TBD` h | `TBD` min | `TBD` | `TBD` h |
-| Internal result | `TBD` h | `TBD` min | 1 | `TBD` h |
-| Listing review + fixes | `TBD` h per listing | `TBD` min | `TBD` | `TBD` h |
-| Post-sync check | `TBD` min | ~0 (scheduled) | `TBD` | `TBD` h |
-| Owner revenue estimate | `TBD` min | `TBD` min | `TBD` | `TBD` h |
-| Prospect list (60 leads) | `TBD` h | `TBD` h | one-off | `TBD` h |
-| **Total** | | | | **`TBD` h/month** |
 
 ## Architecture
 

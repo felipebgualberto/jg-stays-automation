@@ -54,12 +54,3 @@ prioritized lists, 9 iterations with the operator.
 - Marketplace collection needs the operator's own signed-in account.
 - Market data exists for 2 areas only. Elsewhere the simulator relies on the quality slider
   and says so.
-
-## Impact
-
-| | Before | Now |
-|---|---|---|
-| One owner estimate | `TBD` min (or "not done") | `TBD` min · `TBD` per month |
-| 60-lead list | `TBD` h by hand | `TBD` h with Claude |
-
-*Time figures are the operator's own estimates (see the root README).*

@@ -76,13 +76,3 @@ cd .. && pytest -q
 | `tests/test_cascade.py` | Cascade order, owned-unit rule, reconciliation |
 
 > The PDFs are in Brazilian Portuguese because owners read them. Code and docs are in English.
-
-## Impact
-
-| | Before | Now |
-|---|---|---|
-| Owner statement | `TBD` h per statement | `TBD` min |
-| Internal result | `TBD` h | `TBD` min |
-| Volume | `TBD` statements/month | same |
-
-*Time figures are the operator's own estimates (see the root README).*

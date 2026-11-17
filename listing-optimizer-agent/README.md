@@ -93,16 +93,6 @@ is made about bookings.*
 - Price decisions.
 - Booking extranet: the agent can't log in, so the operator does.
 
-## Impact
-
-| | Before | Now |
-|---|---|---|
-| Review + fixes per listing | `TBD` h (or "not done") | `TBD` min |
-| Post-sync check | `TBD` min each | ~0 (scheduled) |
-| Volume | `TBD` runs/month · `TBD` checks/month | same |
-
-*Time figures are the operator's own estimates (see the root README).*
-
 ## Lessons
 
 - **"Done" means verified on the channel, not saved in the PMS.** Most wasted effort

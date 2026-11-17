@@ -36,7 +36,6 @@ built-in check before anyone relies on it.**
 - **Owner statements** generated monthly since Sep 2026, each reconciled before sending.
   Estimated platform fees are always labeled as estimates.
 - **60 qualified owner leads** from 276+ screened listings, in two prioritized lists.
-- **Time saved:** `TBD` h/month (operator's estimates, see the root README).
 
 ## Lessons
 
